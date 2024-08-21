@@ -1,18 +1,27 @@
-function highlight(elem, callback) {
-    //const bgColor = "lightGreen";
-    elem.style.backgroundColor = "lightGreen";
-    if (callback && typeof callback === 'function') {
-        callback(elem)
-    }
+function highlight(elem) {
+    const bgColor = 'yellow';
+    elem.style.backgroundColor = bgColor;
 
+    let event = new CustomEvent('highlight', {
+        detail: {
+            backgroundColor: bgColor
+        }
+    });
+
+    elem.dispatchEvent(event);
 }
 
-let note = document.querySelector('.note');
+let div = document.querySelector('.note');
 
 function addBorder(elem) {
     elem.style.border = "solid 1px red";
 }
 
-highlight(note, addBorder);
+div.addEventListener('highlight', function(e){
+    addBorder(this);
+
+    console.log(e.detail);
+});
 
 
+highlight(div);
